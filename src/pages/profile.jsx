@@ -8,7 +8,9 @@ export default function EmergencyDetailsPage() {
   const [sosActivated, setSosActivated] = useState(false);
   const [sosLoading, setSosLoading] = useState(false);
   const [sosMessage, setSosMessage] = useState("");
-  const {id} = useParams();
+  const { id } = useParams();
+  let lat = 0;
+  let lon = 0;
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -22,7 +24,6 @@ export default function EmergencyDetailsPage() {
           );
         }
         const data = await response.json();
-       
 
         setTimeout(() => {
           setUserData(data);
@@ -39,16 +40,12 @@ export default function EmergencyDetailsPage() {
     fetchUserData();
   }, []);
 
-  const handleSOS = async () => {
-    setSosLoading(true);
-    setSosMessage("");
-
+  useEffect(() => {
     try {
       if (!navigator.geolocation) {
         alert("Geolocation is not supported by your browser.");
       }
-      let lat = 0;
-        let lon = 0;
+
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -56,7 +53,7 @@ export default function EmergencyDetailsPage() {
             lat = latitude;
             lon = longitude;
             console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-           
+
             console.log(lat);
             console.log(lon);
           },
@@ -67,7 +64,16 @@ export default function EmergencyDetailsPage() {
       } else {
         console.error("Geolocation is not supported by this browser.");
       }
-      console.log(userData._id);
+    } catch (err) {
+      console.error("Error getting location:", err.message);
+    }
+  }, []);
+
+  const handleSOS = async () => {
+    setSosLoading(true);
+    setSosMessage("");
+
+    try {
       const sos = await fetch(
         "https://emergencyqr.vercel.app/api/sos/trigger",
         {
@@ -78,14 +84,14 @@ export default function EmergencyDetailsPage() {
           body: JSON.stringify({
             id: userData._id,
             location: {
-                lat: lat,
-                long: lon,
-                },
+              lat: lat,
+              long: lon,
+            },
           }),
         }
       );
       const sosData = await sos.json();
-        console.log(sosData);
+      console.log(sosData);
       setTimeout(() => {
         setSosActivated(true);
         setSosMessage(
