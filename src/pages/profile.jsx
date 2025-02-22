@@ -13,8 +13,8 @@ export default function EmergencyDetailsPage() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // const {id} = useParams();
-        const id = "67b989d6abd339fd598abd7f";
+        const {id} = useParams();
+        // const id = "67b989d6abd339fd598abd7f";
 
         const response = await fetch(
           `https://emergencyqr.vercel.app/api/auth/me/${id}`
