@@ -9,8 +9,8 @@ export default function EmergencyDetailsPage() {
   const [sosLoading, setSosLoading] = useState(false);
   const [sosMessage, setSosMessage] = useState("");
   const { id } = useParams();
-  let lat = 0;
-  let lon = 0;
+  const lat = 18.4575775;
+  const lon = 73.850721;
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -50,8 +50,8 @@ export default function EmergencyDetailsPage() {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             const { latitude, longitude } = position.coords;
-            lat = latitude;
-            lon = longitude;
+            // lat = latitude;
+            // lon = longitude;
             console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
 
             console.log(lat);
