@@ -20,6 +20,7 @@ export default function Dashboard() {
         if (hasQrCode) {
           
           setQrData({
+            id: user._id,
             bloodType: user.bloodType,
             medicalHistory: user.medicalHistory,
             emergencyContacts: user.emergencyContacts,
@@ -225,7 +226,7 @@ export default function Dashboard() {
                       Download QR
                     </button>
                     <button 
-                      onClick={() => { navigator.clipboard.writeText(qrData.qrCodeUrl); setSuccess("QR URL copied to clipboard!"); }}
+                      onClick={() => { navigator.clipboard.writeText(`https://emergencyqr-frontend.vercel.app/profile/${qrData._id}`); setSuccess("QR URL copied to clipboard!"); }}
                       className="flex items-center py-2 px-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-lg font-medium transition-colors"
                     >
                       <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
