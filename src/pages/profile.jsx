@@ -8,14 +8,11 @@ export default function EmergencyDetailsPage() {
   const [sosActivated, setSosActivated] = useState(false);
   const [sosLoading, setSosLoading] = useState(false);
   const [sosMessage, setSosMessage] = useState("");
-
+  const {id} = useParams();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const {id} = useParams();
-        // const id = "67b989d6abd339fd598abd7f";
-
         const response = await fetch(
           `https://emergencyqr.vercel.app/api/auth/me/${id}`
         );
