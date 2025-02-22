@@ -184,13 +184,6 @@ export default function EmergencyDetailsPage() {
     ) {
       botResponse =
         "Your emergency QR code contains your vital medical information and emergency contacts. If you're found unresponsive, first responders can scan this code to access critical information about you, including medical conditions, allergies, and who to contact.";
-    } else if (
-      lowerCaseMessage.includes("hello") ||
-      lowerCaseMessage.includes("hi") ||
-      lowerCaseMessage.includes("hey")
-    ) {
-      botResponse =
-        "Hello! I'm here to help with emergency information and first aid guidance. What would you like to know about?";
     } else if (lowerCaseMessage.includes("thank")) {
       botResponse =
         "You're welcome! If you have any other questions about emergency procedures or first aid, feel free to ask.";
