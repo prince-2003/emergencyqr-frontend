@@ -11,16 +11,16 @@ export default function EmergencyDetailsPage() {
   const { id } = useParams();
   const lat = 18.4575775;
   const lon = 73.850721;
-  
+
   // Chatbot states
   const [chatOpen, setChatOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { 
-      type: 'bot', 
-      text: 'Hello! I\'m your Emergency AI Assistant. How can I help you today? You can ask me about first aid, emergency procedures, or how to use this application.' 
-    }
+    {
+      type: "bot",
+      text: "Hello! I'm your Emergency AI Assistant. How can I help you today? You can ask me about first aid, emergency procedures, or how to use this application.",
+    },
   ]);
-  const [inputMessage, setInputMessage] = useState('');
+  const [inputMessage, setInputMessage] = useState("");
   const [isBotTyping, setIsBotTyping] = useState(false);
   const chatEndRef = useRef(null);
 
@@ -77,10 +77,10 @@ export default function EmergencyDetailsPage() {
       console.error("Error getting location:", err.message);
     }
   }, []);
-  
+
   // Auto-scroll chat to bottom when new messages appear
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   const handleSOS = async () => {
@@ -126,84 +126,124 @@ export default function EmergencyDetailsPage() {
       setSosLoading(false);
     }
   };
-  
+
   const processMessage = async (userMessage) => {
-    
-    setMessages(prev => [...prev, { type: 'user', text: userMessage }]);
-    setInputMessage('');
+    setMessages((prev) => [...prev, { type: "user", text: userMessage }]);
+    setInputMessage("");
     setIsBotTyping(true);
-    
-    
+
     const lowerCaseMessage = userMessage.toLowerCase();
-    let botResponse = '';
+    let botResponse = "";
     let foundMatch = true;
-    
-    if (lowerCaseMessage.includes('cpr') || lowerCaseMessage.includes('cardiopulmonary resuscitation')) {
-      botResponse = 'For CPR: 1) Check if the person is responsive. 2) Call emergency services. 3) Place the heel of your hand on the center of the chest. 4) Place your other hand on top. 5) Push hard and fast at a rate of 100-120 compressions per minute. 6) Allow the chest to fully recoil between compressions. Continue until help arrives.';
-    } else if (lowerCaseMessage.includes('bleeding') || lowerCaseMessage.includes('blood')) {
-      botResponse = 'To control bleeding: 1) Apply direct pressure with a clean cloth or bandage. 2) If possible, elevate the wound above the heart. 3) Apply pressure to the artery supplying the area if direct pressure doesn\'t work. 4) As a last resort, apply a tourniquet if the bleeding is life-threatening and on a limb. 5) Seek immediate medical attention.';
-    } else if (lowerCaseMessage.includes('choking')) {
-      botResponse = "For a choking adult: 1) Ask Are you choking? If they can't speak, cough or breathe, proceed. 2) Stand behind them and wrap your arms around their waist. 3) Place your fist above their navel. 4) Grasp your fist with your other hand and pull inward and upward with quick thrusts. 5) Repeat until the object is dislodged or help arrives.";
-    } else if (lowerCaseMessage.includes('burn') || lowerCaseMessage.includes('burning')) {
-      botResponse = "For burns: 1) Remove the source of the burn. 2) Cool the burn with cool (not cold) running water for 10-15 minutes. 3) Cover with a sterile, non-stick bandage. 4) Don't apply butter, oil, or ointments. 5) Seek medical attention for severe burns, burns on the face, hands, feet, genitals, or covering large areas.";
-    } else if (lowerCaseMessage.includes('fracture') || lowerCaseMessage.includes('broken bone')) {
-      botResponse = "For a suspected fracture: 1) Immobilize the injured area. Don't try to realign the bone. 2) Apply ice packs wrapped in a towel to reduce swelling and pain. 3) Treat for shock if necessary by having the person lie down with feet elevated. 4) Seek immediate medical attention.";
-    } else if (lowerCaseMessage.includes('heart attack') || lowerCaseMessage.includes('cardiac')) {
-      botResponse = 'Heart attack signs include: chest pain/pressure, pain radiating to arm/jaw/back, shortness of breath, cold sweat, nausea. Actions: 1) Call emergency services immediately. 2) Have the person sit and rest. 3) If the person is not allergic to aspirin, give them one to chew (if available). 4) Be prepared to perform CPR if they become unresponsive.';
-    } else if (lowerCaseMessage.includes('stroke')) {
-      botResponse = 'Remember FAST for stroke symptoms: Face drooping, Arm weakness, Speech difficulty, Time to call emergency services. Additional symptoms include sudden numbness, confusion, trouble seeing, dizziness, or severe headache. Call emergency services immediately if you suspect a stroke. Note the time when symptoms started.';
-    } else if (lowerCaseMessage.includes('sos') || lowerCaseMessage.includes('emergency button')) {
-      botResponse = 'The SOS button at the top of the screen will alert your emergency contacts and send them your current location. Only use it in genuine emergencies. Your contacts will receive an SMS with your details and location.';
-    } else if (lowerCaseMessage.includes('qr code') || lowerCaseMessage.includes('scan')) {
-      botResponse = "Your emergency QR code contains your vital medical information and emergency contacts. If you're found unresponsive, first responders can scan this code to access critical information about you, including medical conditions, allergies, and who to contact.";
-    } else if (lowerCaseMessage.includes('hello') || lowerCaseMessage.includes('hi') || lowerCaseMessage.includes('hey')) {
-      botResponse = 'Hello! I\'m here to help with emergency information and first aid guidance. What would you like to know about?';
-    } else if (lowerCaseMessage.includes('thank')) {
-      botResponse = 'You\'re welcome! If you have any other questions about emergency procedures or first aid, feel free to ask.';
+
+    if (
+      lowerCaseMessage.includes("cpr") ||
+      lowerCaseMessage.includes("cardiopulmonary resuscitation")
+    ) {
+      botResponse =
+        "For CPR: 1) Check if the person is responsive. 2) Call emergency services. 3) Place the heel of your hand on the center of the chest. 4) Place your other hand on top. 5) Push hard and fast at a rate of 100-120 compressions per minute. 6) Allow the chest to fully recoil between compressions. Continue until help arrives.";
+    } else if (
+      lowerCaseMessage.includes("bleeding") ||
+      lowerCaseMessage.includes("blood")
+    ) {
+      botResponse =
+        "To control bleeding: 1) Apply direct pressure with a clean cloth or bandage. 2) If possible, elevate the wound above the heart. 3) Apply pressure to the artery supplying the area if direct pressure doesn't work. 4) As a last resort, apply a tourniquet if the bleeding is life-threatening and on a limb. 5) Seek immediate medical attention.";
+    } else if (lowerCaseMessage.includes("choking")) {
+      botResponse =
+        "For a choking adult: 1) Ask Are you choking? If they can't speak, cough or breathe, proceed. 2) Stand behind them and wrap your arms around their waist. 3) Place your fist above their navel. 4) Grasp your fist with your other hand and pull inward and upward with quick thrusts. 5) Repeat until the object is dislodged or help arrives.";
+    } else if (
+      lowerCaseMessage.includes("burn") ||
+      lowerCaseMessage.includes("burning")
+    ) {
+      botResponse =
+        "For burns: 1) Remove the source of the burn. 2) Cool the burn with cool (not cold) running water for 10-15 minutes. 3) Cover with a sterile, non-stick bandage. 4) Don't apply butter, oil, or ointments. 5) Seek medical attention for severe burns, burns on the face, hands, feet, genitals, or covering large areas.";
+    } else if (
+      lowerCaseMessage.includes("fracture") ||
+      lowerCaseMessage.includes("broken bone")
+    ) {
+      botResponse =
+        "For a suspected fracture: 1) Immobilize the injured area. Don't try to realign the bone. 2) Apply ice packs wrapped in a towel to reduce swelling and pain. 3) Treat for shock if necessary by having the person lie down with feet elevated. 4) Seek immediate medical attention.";
+    } else if (
+      lowerCaseMessage.includes("heart attack") ||
+      lowerCaseMessage.includes("cardiac")
+    ) {
+      botResponse =
+        "Heart attack signs include: chest pain/pressure, pain radiating to arm/jaw/back, shortness of breath, cold sweat, nausea. Actions: 1) Call emergency services immediately. 2) Have the person sit and rest. 3) If the person is not allergic to aspirin, give them one to chew (if available). 4) Be prepared to perform CPR if they become unresponsive.";
+    } else if (lowerCaseMessage.includes("stroke")) {
+      botResponse =
+        "Remember FAST for stroke symptoms: Face drooping, Arm weakness, Speech difficulty, Time to call emergency services. Additional symptoms include sudden numbness, confusion, trouble seeing, dizziness, or severe headache. Call emergency services immediately if you suspect a stroke. Note the time when symptoms started.";
+    } else if (
+      lowerCaseMessage.includes("sos") ||
+      lowerCaseMessage.includes("emergency button")
+    ) {
+      botResponse =
+        "The SOS button at the top of the screen will alert your emergency contacts and send them your current location. Only use it in genuine emergencies. Your contacts will receive an SMS with your details and location.";
+    } else if (
+      lowerCaseMessage.includes("qr code") ||
+      lowerCaseMessage.includes("scan")
+    ) {
+      botResponse =
+        "Your emergency QR code contains your vital medical information and emergency contacts. If you're found unresponsive, first responders can scan this code to access critical information about you, including medical conditions, allergies, and who to contact.";
+    } else if (
+      lowerCaseMessage.includes("hello") ||
+      lowerCaseMessage.includes("hi") ||
+      lowerCaseMessage.includes("hey")
+    ) {
+      botResponse =
+        "Hello! I'm here to help with emergency information and first aid guidance. What would you like to know about?";
+    } else if (lowerCaseMessage.includes("thank")) {
+      botResponse =
+        "You're welcome! If you have any other questions about emergency procedures or first aid, feel free to ask.";
     } else {
-      
       foundMatch = false;
     }
-    
-    
+
     if (!foundMatch) {
       try {
-        console.log('Sending message to AI:', userMessage);
-        const response = await fetch('https://emergencyqr.vercel.app/api/chatbot/ask', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            message: userMessage,
-            id: id, 
-          }),
-        });
-        
+        console.log("Sending message to AI:", userMessage);
+        const response = await fetch(
+          "https://emergencyqr.vercel.app/api/chatbot/ask",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              message: userMessage,
+              id: id,
+            }),
+          }
+        );
+
         if (!response.ok) {
-          throw new Error('Failed to get AI response');
+          throw new Error("Failed to get AI response");
         }
-        
+
         const data = await response.json();
         console.log(data);
-        botResponse = data.message || 'I apologize, but I\'m having trouble answering that question right now. For medical emergencies, please call emergency services.';
-        
+        botResponse =
+          data.message ||
+          "I apologize, but I'm having trouble answering that question right now. For medical emergencies, please call emergency services.";
       } catch (error) {
-        console.error('Error getting AI response:', error);
-        botResponse = 'I apologize, but I\'m having trouble connecting to my knowledge base. Please try again or ask about common first aid procedures like CPR, burns, bleeding, or choking.';
+        console.error("Error getting AI response:", error);
+        botResponse =
+          "I apologize, but I'm having trouble connecting to my knowledge base. Please try again or ask about common first aid procedures like CPR, burns, bleeding, or choking.";
       }
     }
-    
+
     // Add a short delay to make the response feel more natural
-    setTimeout(() => {
-      setMessages(prev => [...prev, { type: 'bot', text: botResponse }]);
-      setIsBotTyping(false);
-    }, foundMatch ? 1500 : 500); // Shorter delay if we're waiting for API anyway
+    setTimeout(
+      () => {
+        setMessages((prev) => [...prev, { type: "bot", text: botResponse }]);
+        setIsBotTyping(false);
+      },
+      foundMatch ? 1500 : 500
+    ); // Shorter delay if we're waiting for API anyway
   };
-  
+
   const handleSendMessage = (e) => {
     e.preventDefault();
-    if (inputMessage.trim() === '') return;
+    if (inputMessage.trim() === "") return;
     processMessage(inputMessage);
   };
 
@@ -605,7 +645,7 @@ export default function EmergencyDetailsPage() {
                       the page or call emergency services directly:
                     </p>
                     <a
-                      href="tel:911"
+                      href="tel:102"
                       className="flex items-center justify-center py-3 px-4 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors w-full"
                     >
                       <svg
@@ -643,36 +683,62 @@ export default function EmergencyDetailsPage() {
           </a>
         </div>
       </div>
-      
+
       {/* Floating AI Chatbot Button */}
       <div className="fixed bottom-6 right-6 z-50">
         <button
           onClick={() => setChatOpen(!chatOpen)}
           className={`flex items-center justify-center w-16 h-16 rounded-full bg-blue-600 dark:bg-blue-500 text-white shadow-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-300 ${
-            chatOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'
+            chatOpen ? "scale-0 opacity-0" : "scale-100 opacity-100"
           }`}
           aria-label="Open Emergency Assistant"
         >
-          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+          <svg
+            className="w-8 h-8"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+            />
           </svg>
         </button>
       </div>
-      
+
       {/* Chatbot Panel */}
-      <div className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${
-        chatOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-0 pointer-events-none'
-      }`}>
+      <div
+        className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${
+          chatOpen
+            ? "scale-100 opacity-100"
+            : "scale-0 opacity-0 pointer-events-none"
+        }`}
+      >
         <div className="w-80 md:w-96 h-[500px] max-h-[80vh] bg-white dark:bg-gray-800 rounded-xl shadow-2xl flex flex-col overflow-hidden">
           {/* Chat Header */}
           <div className="bg-blue-600 dark:bg-blue-700 text-white p-4 flex items-center justify-between">
             <div className="flex items-center">
-              <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <svg
+                className="w-6 h-6 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
               </svg>
               <div>
                 <h3 className="font-medium">Emergency Assistant</h3>
-                <p className="text-xs text-blue-100">Ask about first aid & emergencies</p>
+                <p className="text-xs text-blue-100">
+                  Ask about first aid & emergencies
+                </p>
               </div>
             </div>
             <button
@@ -680,27 +746,44 @@ export default function EmergencyDetailsPage() {
               className="text-white hover:text-blue-200"
               aria-label="Close chat"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
-          
+
           {/* Chat Messages */}
           <div className="flex-1 p-4 overflow-y-auto bg-gray-50 dark:bg-gray-900">
             <div className="space-y-4">
               {messages.map((message, index) => (
-                <div key={index} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[80%] rounded-lg p-3 ${
-                    message.type === 'user' 
-                      ? 'bg-blue-600 text-white rounded-br-none' 
-                      : 'bg-white dark:bg-gray-700 shadow-sm rounded-bl-none text-gray-800 dark:text-white'
-                  }`}>
+                <div
+                  key={index}
+                  className={`flex ${
+                    message.type === "user" ? "justify-end" : "justify-start"
+                  }`}
+                >
+                  <div
+                    className={`max-w-[80%] rounded-lg p-3 ${
+                      message.type === "user"
+                        ? "bg-blue-600 text-white rounded-br-none"
+                        : "bg-white dark:bg-gray-700 shadow-sm rounded-bl-none text-gray-800 dark:text-white"
+                    }`}
+                  >
                     <p className="text-sm">{message.text}</p>
                   </div>
                 </div>
               ))}
-              
+
               {/* Bot typing indicator */}
               {isBotTyping && (
                 <div className="flex justify-start">
@@ -716,9 +799,12 @@ export default function EmergencyDetailsPage() {
               <div ref={chatEndRef} />
             </div>
           </div>
-          
+
           {/* Chat Input */}
-          <form onSubmit={handleSendMessage} className="border-t border-gray-200 dark:border-gray-700 p-3 flex items-center">
+          <form
+            onSubmit={handleSendMessage}
+            className="border-t border-gray-200 dark:border-gray-700 p-3 flex items-center"
+          >
             <input
               type="text"
               value={inputMessage}
@@ -728,15 +814,25 @@ export default function EmergencyDetailsPage() {
             />
             <button
               type="submit"
-              disabled={isBotTyping || inputMessage.trim() === ''}
+              disabled={isBotTyping || inputMessage.trim() === ""}
               className="bg-blue-600 dark:bg-blue-500 text-white py-2 px-4 rounded-r-lg hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13 5l7 7-7 7M5 5l7 7-7 7"
+                />
               </svg>
             </button>
           </form>
-          
+
           {/* Chat Footer */}
           <div className="text-center py-2 px-3 bg-gray-50 dark:bg-gray-900 text-xs text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700">
             For medical emergencies, please call emergency services directly
